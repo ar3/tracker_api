@@ -34,6 +34,8 @@ module TrackerApi
       attribute :story_type, String # (feature, bug, chore, release)
       attribute :task_ids, [Integer]
       attribute :tasks, [Task]
+      attribute :blocker_ids, [Integer]
+      attribute :blockers, [Blocker]
       attribute :transitions, [StoryTransition]
       attribute :updated_at, DateTime
       attribute :url, String
@@ -150,6 +152,13 @@ module TrackerApi
         else
           @transitions = Endpoints::StoryTransitions.new(client).get(project_id, id, params)
         end
+      end
+
+      # Provides a list of all the blockers on the story.
+      #
+      # @return [Array[Blocker]]
+      def blockers(params = {})
+        @blockers
       end
 
       # @param [Hash] params attributes to create the task with
